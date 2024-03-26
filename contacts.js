@@ -15,6 +15,14 @@ async function listContacts() {
 
 async function getContactById(contactId) {
   // ...твій код. Повертає об'єкт контакту з таким id. Повертає null, якщо контакт з таким id не знайдений.
+  try {
+    const data = await fs.readFile(contactsPath);
+    const records = JSON.parse(data.toString());
+    const findRecord = records.find((record) => record.id === contactId);
+    return findRecord ? findRecord : null;
+  } catch (err) {
+    console.log(err.message);
+  }
 }
 
 async function removeContact(contactId) {
